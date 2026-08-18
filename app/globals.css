@@ -1,26 +1,46 @@
 @import "tailwindcss";
+ @plugin "daisyui" {
+   themes: all
+ }
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+* {
+  scroll-behaviour: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    font-family: var(--font-inter), sans-serif;
+    @apply bg-base-100 text-base-content font-sans antialiased;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  h1 {
+    @apply text-4xl md:text-7xl font-bold tracking-tight;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl font-bold tracking-tight;
+  }
+  h3 {
+    @apply text-2xl font-bold;
+  }
+  h5 {
+    @apply text-lg md:text-xl font-semibold;
+  }
+  h6 {
+    @apply text-sm font-bold;
+  }
+  p {
+    @apply leading-relaxed text-sm text-base-content/70;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .flexCenter {
+    @apply flex items-center justify-center;
+  }
+  .flexBetween {
+    @apply flex items-center justify-between;
+  }
+  .flexStart {
+    @apply flex items-center justify-start;
+  }
 }

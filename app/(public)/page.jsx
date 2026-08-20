@@ -1,10 +1,17 @@
 import React from 'react'
+import Hero from '../components/Hero'
+import NewArrivals from '../components/NewArrivals'
+import BannerCountdown from '../components/BannerCountdown '
+import PopularProducts from '../components/PopularProducts'
 
 const page = () => {
   return (
-    <div>
-      hero
-    </div>
+    <>
+    <Hero/>
+    <NewArrivals />
+    <BannerCountdown/>
+    <PopularProducts />
+    </>
   )
 }
 

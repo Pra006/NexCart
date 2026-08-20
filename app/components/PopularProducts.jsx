@@ -1,0 +1,40 @@
+"use client";
+import React from "react";
+import Title from "./Title";
+import ProductCard from "./ProductCard";
+import { PRODUCTS_DATA } from "../assets/assets";
+
+const PopularProducts = () => {
+  const maxItems = 5;
+  const allProducts = PRODUCTS_DATA;
+  const popularProducts = allProducts
+    .slice()
+    .sort((a, b) => (b.rating.length || 0) - (a.rating?.length || 0))
+    .slice(0, maxItems);
+
+  return (
+    <section className="py-16 sm:px-12">
+      <Title
+        headingStart={"Popular"}
+        headingEnd={"Products"}
+        subtext={`Trending now • Showing ${popularProducts.length} of ${allProducts.length} products`}
+        hasAction={"View All"}
+        linkTo="/shop"
+      />
+
+      <div className="grid grid-cols-2 sm:flex flex-wrap justify-between gap-3 lg:gap-6 mt-11">
+        {allProducts.slice(0, 5).map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
+      </div>
+
+      {popularProducts.length === 0 && (
+        <div className="text-center py-20">
+          <p className="text-neutral-400 text-lg">No popular products yet</p>
+        </div>
+      )}
+    </section>
+  );
+};
+
+export default PopularProducts;

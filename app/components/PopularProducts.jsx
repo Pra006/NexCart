@@ -3,10 +3,12 @@ import React from "react";
 import Title from "./Title";
 import ProductCard from "./ProductCard";
 import { PRODUCTS_DATA } from "../assets/assets";
+import { useProductStore } from "@/lib/zustand/productStore";
 
 const PopularProducts = () => {
+  const products= useProductStore(state => state.list)
   const maxItems = 5;
-  const allProducts = PRODUCTS_DATA;
+  const allProducts = products;
   const popularProducts = allProducts
     .slice()
     .sort((a, b) => (b.rating.length || 0) - (a.rating?.length || 0))

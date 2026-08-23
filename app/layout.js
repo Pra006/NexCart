@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
     <html
       lang="en"
       className={inter.variable} data-scroll-behaviour="smooth"
-       data-theme="valentine" suppressHydrationWarning
+        suppressHydrationWarning
     >
       <body className={inter.className}>
         <Toaster position="bottom-right"/>{children}</body>

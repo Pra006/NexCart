@@ -39,8 +39,6 @@ const Hero = () => {
             Become a Seller
           </Link>
         </div>
-
-        {/* STATS */}
         <HeroStat />
       </div>
     </div>

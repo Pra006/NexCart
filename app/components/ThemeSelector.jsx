@@ -3,9 +3,11 @@
 import React, { useState } from "react";
 import { Palette } from "lucide-react";
 import { THEMES } from "../assets/assets";
+import { useThemeStore } from "@/lib/zustand/themestore";
+
 
 const ThemeSelector = () => {
-  const [theme, setTheme] = useState("cupcake");
+  const {theme, setTheme}= useThemeStore()
 
   const handleThemeChange = (selectedTheme) => {
     setTheme(selectedTheme);

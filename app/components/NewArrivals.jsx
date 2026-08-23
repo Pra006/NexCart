@@ -3,11 +3,13 @@ import React from "react";
 import Title from "./Title";
 import ProductCard from "./ProductCard";
 import { PRODUCTS_DATA } from "../assets/assets";
+import { useProductStore } from "@/lib/zustand/productStore";
+
 
 const NewArrivals = () => {
-  // const products = useProductStore((state) => state.list);
+   const products = useProductStore((state) => state.list);
   const maxItems = 5;
-  const allProducts = PRODUCTS_DATA;
+  const allProducts = products;
   const recentProducts = allProducts
     .slice()
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

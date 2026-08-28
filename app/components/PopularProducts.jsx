@@ -25,7 +25,7 @@ const PopularProducts = () => {
       />
 
       <div className="grid grid-cols-2 sm:flex flex-wrap justify-between gap-3 lg:gap-6 mt-11">
-        {allProducts.slice(0, 5).map((product) => (
+        {allProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>

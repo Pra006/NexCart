@@ -60,7 +60,7 @@ function ShopContent() {
   //Pagination
   const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginationProducts = filteredProducts.slice(
+  const paginatedProducts = filteredProducts.slice(
     startIndex,
     startIndex + ITEMS_PER_PAGE,
   );
@@ -135,7 +135,87 @@ function ShopContent() {
               </fieldset>
             </div>
           </div>
-          
+          {paginatedProducts.length > 0 && (
+            <>
+              <div className="grid grid-cols-2 sm:flex flex-wrap justify-between gap-3 lg:gap-6 mb-8">
+                {paginatedProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              {totalPages > 1 && (
+                <div className="flexCenter gap-2 mt-8">
+                  <div className="join">
+                    <button
+                      onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+                      disabled={currentPage === 1}
+                      className="join-item btn"
+                    >
+                      «
+                    </button>
+                    {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                      (page) => (
+                        <button
+                          key={page}
+                          onClick={() => setCurrentPage(page)}
+                          className={`join-item btn ${currentPage === page ? "btn-active" : ""}`}
+                        >
+                          {page}
+                        </button>
+                      ),
+                    )}
+                    <button
+                      onClick={() =>
+                        setCurrentPage((p) => Math.min(totalPages, p + 1))
+                      }
+                      disabled={currentPage === totalPages}
+                      className="join-item btn"
+                    >
+                      »
+                    </button>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+      {/* sidebar */}
+      <div className="drawer-side">
+        <label
+          htmlFor="my-drawer-4"
+          aria-label="close sidebar"
+          className="drawer-overlay"
+        ></label>
+        <div className="w-64 h-full bg-base-200/50 backdrop-blur-2xl rounded-xl overflow-y-auto">
+          <div className="sticky top-0 p-4" />
+          <div className="space-y-6 p-4" />
+          <div>
+            <h3 className="font-semibold text-base mb-3 flexStart gap-2">
+              <span className="uppercase">Category</span>
+            </h3>
+            <ul className="menu bg-base-100 w-full rounded-xl gap-1">
+              <li>
+                <a
+                  onClick={() => handleCategory(null)}
+                  className={`flexBetween ${!selectedCategory ? "menu-active" : ""}`}
+                >
+                  <span>All Products</span>
+                  <span className="badge badge-sm">{products.length}</span>
+                </a>
+              </li>
+              {categories.map((category) => (
+                <li key={category.name}>
+                  <a
+                    onClick={() => handleCategory(category.name)}
+                    className={`flexBetween ${selectedCategory === category.name ? "menu-active" : ""}`}
+                  >
+                    <span>{category.name}</span>
+                    <span className="badge badge-sm">{category.count}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

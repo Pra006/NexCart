@@ -81,10 +81,16 @@ function ShopContent() {
     setCurrentPage(1);
   };
 
+  const handleResetFilter = () => {
+    setCurrentPage(1);
+    setSelectedCategory(null);
+    setMaxPrice(productMaxPrice);
+    setSortBy("newest");
+    router.push("/shop");
+  };
+
   useEffect(() => {
-    if (categoryParam) {
-      setSelectedCategory(categoryParam);
-    }
+    setSelectedCategory(categoryParam || null);
   }, [categoryParam]);
 
   return (
@@ -215,6 +221,33 @@ function ShopContent() {
                 </li>
               ))}
             </ul>
+            <div className="divider my-2"></div>
+            <div>
+              <h6 className="uppercase">Max Price</h6>
+              <div className="text-base-200 rounded-xl my-2 p-3">
+                <div className="flexBetween pb-1">
+                  <p>{currency}0</p>
+                  <p>
+                    {currency} {maxPrice}
+                  </p>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={productMaxPrice}
+                  value={maxPrice}
+                  onChange={handleMaxPriceChange}
+                  className="range range-neutral"
+                />
+              </div>
+            </div>
+            <div className="divider my-2"></div>
+            <button
+              onClick={handleResetFilter}
+              className="btn btn-outline btn-sm w-full"
+            >
+              Reset Filters
+            </button>
           </div>
         </div>
       </div>

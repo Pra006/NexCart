@@ -6,11 +6,15 @@ import { useState } from "react";
 
 import ThemeSelector from "./ThemeSelector";
 import { ShoppingCart } from "lucide-react";
+import { useCartStore } from "@/lib/zustand/cartStore";
 
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState("website");
-
-  return (
+  const cartItems = useCartStore((state) => state.cartItems);
+const cartCount = Object.values(cartItems).reduce(
+  (total, quantity) => total + quantity,
+  0
+);  return (
     <div className="w-full rouded-md py-1">
       <div className="navbar p-0">
         <div className="navbar-start">
@@ -49,10 +53,11 @@ const Navbar = () => {
             aria-label="Shopping cart"
           >
             <ShoppingCart className="h-5 w-5" />
-
-            <span className="badge badge-sm badge-primary absolute -right-1 -top-1">
-              0
-            </span>
+            {cartCount > 0 && (
+              <span className="badge badge-sm badge-primary absolute -right-1 -top-1">
+                {cartCount}
+              </span>
+            )}
           </Link>
           <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">
             Login

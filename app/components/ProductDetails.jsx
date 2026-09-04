@@ -7,7 +7,6 @@ const ProductDetails = ({ product }) => {
   return (
     <div className="mt-10 py-5 ">
       {/* Daisy ui tabs */}
-      {/* name of each tab group should be unique */}
       <div className="tabs tabs-lift">
         <input
           type="radio"

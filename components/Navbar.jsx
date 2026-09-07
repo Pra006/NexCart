@@ -11,10 +11,11 @@ import { useCartStore } from "@/lib/zustand/cartStore";
 const Navbar = () => {
   const [activeTab, setActiveTab] = useState("website");
   const cartItems = useCartStore((state) => state.cartItems);
-const cartCount = Object.values(cartItems).reduce(
-  (total, quantity) => total + quantity,
-  0
-);  return (
+  const cartCount = Object.values(cartItems).reduce(
+    (total, quantity) => total + quantity,
+    0,
+  );
+  return (
     <div className="w-full rouded-md py-1">
       <div className="navbar p-0">
         <div className="navbar-start">

@@ -2,35 +2,35 @@
 import React from "react";
 import Title from "./Title";
 import ProductCard from "./ProductCard";
-import { PRODUCTS_DATA } from "../assets/assets";
+import { PRODUCTS_DATA } from "@/assets/assets";
 import { useProductStore } from "@/lib/zustand/productStore";
 
-
-const NewArrivals = () => {
-   const products = useProductStore((state) => state.list);
+const PopularProducts = () => {
+  const products= useProductStore(state => state.list)
   const maxItems = 5;
   const allProducts = products;
-  const recentProducts = allProducts
+  const popularProducts = allProducts
     .slice()
-    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .sort((a, b) => (b.rating.length || 0) - (a.rating?.length || 0))
     .slice(0, maxItems);
 
   return (
     <section className="py-16 sm:px-12">
       <Title
-        headingStart={"New"}
-        headingEnd={"Arrivals"}
-        subtext={`Discover our newest collection • Showing ${recentProducts.length} of ${allProducts.length} products`}
+        headingStart={"Popular"}
+        headingEnd={"Products"}
+        subtext={`Trending now • Showing ${popularProducts.length} of ${allProducts.length} products`}
         hasAction={"View All"}
         linkTo="/shop"
       />
 
       <div className="grid grid-cols-2 sm:flex flex-wrap justify-between gap-3 lg:gap-6 mt-11">
-        {recentProducts.slice(0, 5).map((product) => (
+        {allProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
-       {recentProducts.length === 0 && (
+
+      {popularProducts.length === 0 && (
         <div className="text-center py-20">
           <p className="text-neutral-400 text-lg">No popular products yet</p>
         </div>
@@ -39,4 +39,4 @@ const NewArrivals = () => {
   );
 };
 
-export default NewArrivals;
+export default PopularProducts;

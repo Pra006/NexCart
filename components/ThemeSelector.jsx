@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { Palette } from "lucide-react";
-import { THEMES } from "../assets/assets";
+import { THEMES } from "@/assets/assets";
 import { useThemeStore } from "@/lib/zustand/themestore";
 
 

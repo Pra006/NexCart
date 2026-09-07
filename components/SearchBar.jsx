@@ -1,7 +1,7 @@
 import { Search } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import{ CATEGORIES } from "@/app/assets/assets";
+import { CATEGORIES } from "@/assets/assets";
 
 const SearchBar = () => {
   const [search, setSearch] = useState("");

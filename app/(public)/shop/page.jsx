@@ -1,10 +1,10 @@
 "use client";
-import Loading from "@/app/components/Loading";
+import Loading from "@/components/Loading";
 import React, { Suspense, useEffect, useState } from "react";
-import { CATEGORIES } from "@/app/assets/assets";
+import { CATEGORIES } from "@/assets/assets";
 import { useProductStore } from "@/lib/zustand/productStore";
 import { useRouter, useSearchParams } from "next/navigation";
-import ProductCard from "@/app/components/ProductCard";
+import ProductCard from "@/components/ProductCard";
 import { Menu } from "lucide-react";
 
 let ITEMS_PER_PAGE = 12;

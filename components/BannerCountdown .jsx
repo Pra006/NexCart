@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef, useState } from "react";
-import { ASSETS } from "../assets/assets";
+import { ASSETS } from "../assets/assets"
 
 const BannerCountdown = () => {
   const targetRef = useRef(Date.now() + 15 * 24 * 60 * 60 * 1000);

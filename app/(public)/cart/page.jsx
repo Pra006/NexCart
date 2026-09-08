@@ -70,7 +70,10 @@ const Cart = () => {
         subtext={`Checkout + ${cartCount} Items`}
         hasAction={"Add New Product"}
       />
+
       <div className="flex flex-col lg:flex-row gap-10 mt-10">
+        {/* left side */}
+
         <div className="flex-1 overflow-x-auto rounded-2xl border border-base-300 bg-base-200/50">
           <table className="table w-full">
             <thead className="bg-base-200/50">
@@ -131,6 +134,7 @@ const Cart = () => {
             </tbody>
           </table>
         </div>
+        {/* Right side*/}
         <div className="lg:w-96">
           <OrderSummary totalPrice={totalPrice} items={cartArray} />
         </div>

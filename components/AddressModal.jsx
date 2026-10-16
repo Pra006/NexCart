@@ -1,161 +1,128 @@
-"use client"
-
-const AddressModal = () => {
+"use client";
+import { useAddressStore } from "@/lib/zustand/addressStore";
+import { MapPinIcon, XIcon } from "lucide-react";
+import React from "react";
+import { useState } from "react";
+import toast from "react-hot-toast";
+const AddressModal = ({ setShowAddressModal }) => {
+  const addAddress = useAddressStore((state) => state.addAddress);
+  const [address, setAddress] = useState({
+    name: "",
+    email: "",
+    street: "",
+    city: "",
+    state: "",
+    zip: "",
+    country: "",
+    phone: "",
+  });
+  const handleAddressChange = (e) =>
+    setAddress({ ...address, [e.target.name]: e.target.value });
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const result = await addAddress(address);
+    if (result.success) {
+      toast.success(result.message);
+      setShowAddressModal(false);
+    } else {
+      toast.error(result.message);
+    }
+  };
   return (
-    <div>
-    <dialog id="address_modal" className="modal">
-  <div className="modal-box max-w-2xl">
-
-    <h3 className="font-bold text-lg mb-6">
-      Add Shipping Address
-    </h3>
-
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-
-      {/* Full Name */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Full Name</span>
-        </label>
-        <input
-          type="text"
-          name="fullName"
-          placeholder="Enter your full name"
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Phone */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Phone Number</span>
-        </label>
-        <input
-          type="tel"
-          name="phone"
-          placeholder="98XXXXXXXX"
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Province */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Province</span>
-        </label>
-
-        <select
-          name="province"
-          className="select select-bordered w-full"
+    <dialog open id="address_modal" className="modal modal-bottom sm:modal-middle">
+      <div className="modal-box max-w-md rounded-4xl p-8 border border-base-300">
+        <div className="flexBetween mb-8">
+          <div className="flexStart gap-3">
+            <div className="size-10 rounded-full bg-primary/10 flexCenter text-primary">
+              <MapPinIcon size={20} />
+            </div>
+            <h3 className="text-xl">
+              Add New <span className="font-bold">Address</span>
+            </h3>
+          </div>
+          <button
+            onClick={() => setShowAddressModal(false)}
+            className="btn btn-ghost btn-circle btn-sm"
+          >
+            <XIcon size={20} />
+          </button>
+        </div>
+        <form
+          onSubmit={(e) =>
+            toast.promise(handleSubmit(e), { loading: "Saving..." })
+          }
+          className="space-y-4"
         >
-          <option value="">Select Province</option>
-          <option value="Koshi">Koshi Province</option>
-          <option value="Madhesh">Madhesh Province</option>
-          <option value="Bagmati">Bagmati Province</option>
-          <option value="Gandaki">Gandaki Province</option>
-          <option value="Lumbini">Lumbini Province</option>
-          <option value="Karnali">Karnali Province</option>
-          <option value="Sudurpashchim">
-            Sudurpashchim Province
-          </option>
-        </select>
+          <input
+            name="name"
+            onChange={handleAddressChange}
+            className="input input-bordered w-full rounded-xl"
+            placeholder="Full Name"
+            required
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              name="email"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="Email"
+              type="email"
+              required
+            />
+            <input
+              name="phone"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="Phone"
+              required
+            />
+          </div>
+          <input
+            name="street"
+            onChange={handleAddressChange}
+            className="input input-bordered w-full rounded-xl"
+            placeholder="Street Address"
+            required
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              name="city"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="City"
+              required
+            />
+            <input
+              name="state"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="State"
+              required
+            />
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <input
+              name="zip"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="Zip"
+              required
+            />
+            <input
+              name="country"
+              onChange={handleAddressChange}
+              className="input input-bordered w-full rounded-xl"
+              placeholder="Country"
+              required
+            />
+          </div>
+          <button className="btn btn-primary btn-block rounded-2xl mt-4 shadow-lg shadow-primary/20">
+            Save Address
+          </button>
+        </form>
       </div>
+    </dialog>
+  );
+};
 
-      {/* District */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">District</span>
-        </label>
-
-        <input
-          type="text"
-          name="district"
-          placeholder="Enter district"
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Municipality */}
-      <div className="form-control sm:col-span-2">
-        <label className="label">
-          <span className="label-text">Municipality / City</span>
-        </label>
-
-        <input
-          type="text"
-          name="municipality"
-          placeholder="Enter municipality or city"
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Ward */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Ward Number</span>
-        </label>
-
-        <input
-          type="number"
-          name="ward"
-          placeholder="Ward No."
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Landmark */}
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Landmark</span>
-        </label>
-
-        <input
-          type="text"
-          name="landmark"
-          placeholder="Nearby landmark"
-          className="input input-bordered w-full"
-        />
-      </div>
-
-      {/* Address */}
-      <div className="form-control sm:col-span-2">
-        <label className="label">
-          <span className="label-text">Full Address</span>
-        </label>
-
-        <textarea
-          name="address"
-          placeholder="House no., street, area..."
-          className="textarea textarea-bordered w-full h-24"
-        />
-      </div>
-
-    </div>
-
-    {/* Buttons */}
-    <div className="modal-action">
-
-      <form method="dialog">
-        <button className="btn btn-ghost">
-          Cancel
-        </button>
-      </form>
-
-      <button className="btn btn-primary">
-        Save Address
-      </button>
-
-    </div>
-
-  </div>
-
-  {/* Click outside to close */}
-  <form method="dialog" className="modal-backdrop">
-    <button>close</button>
-  </form>
-</dialog>
-    </div>
-  )
-}
-
-export default AddressModal
+export default AddressModal;

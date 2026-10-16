@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import AddressModal from "./AddressModal";
 
 const OrderSummary = ({ totalPrice, items }) => {
   const router = useRouter();
@@ -117,7 +118,7 @@ const OrderSummary = ({ totalPrice, items }) => {
               </h6>
 
               <p className="text-xs opacity-60 mt-1 leading-relaxed">
-                {selectedAddress.address}
+                {selectedAddress.street}
               </p>
 
               <p className="text-xs opacity-60">
@@ -299,6 +300,7 @@ const OrderSummary = ({ totalPrice, items }) => {
           ? "Place Order"
           : "Pay with Stripe"}
       </button>
+      {showAddressModal && <AddressModal setShowAddressModal={setShowAddressModal}/>}
 
       {!selectedAddress && (
         <p className="text-center text-[10px] text-error">

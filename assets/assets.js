@@ -450,7 +450,7 @@ export const ORDERS_DATA = [
         user: USER_DATA
     },
     {
-        id: "ord_01",
+        id: "ord_02",
         total: 68,
         status: "DELIVERED",
         userId: "user_31dQbH27",
@@ -466,7 +466,7 @@ export const ORDERS_DATA = [
         user: USER_DATA
     },
     {
-        id: "ord_01",
+        id: "ord_03",
         total: 68,
         status: "DELIVERED",
         userId: "user_31dQbH27",

@@ -1,17 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Palette } from "lucide-react";
 import { THEMES } from "@/assets/assets";
 import { useThemeStore } from "@/lib/zustand/themestore";
 
-
 const ThemeSelector = () => {
-  const {theme, setTheme}= useThemeStore()
+  const { theme, setTheme, initializeTheme } = useThemeStore();
+
+  useEffect(() => {
+    initializeTheme();
+  }, [initializeTheme]);
 
   const handleThemeChange = (selectedTheme) => {
     setTheme(selectedTheme);
-    document.documentElement.setAttribute("data-theme", selectedTheme);
   };
 
   return (

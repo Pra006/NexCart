@@ -17,8 +17,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={inter.variable} data-scroll-behaviour="smooth"
-        suppressHydrationWarning
+      className={inter.variable}
+      data-theme="light"
+      data-scroll-behaviour="smooth"
+      suppressHydrationWarning
     >
       <body className={inter.className}>
         <Toaster position="bottom-right"/>{children}</body>

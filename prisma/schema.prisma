@@ -1,0 +1,167 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// For creating a User these are the required fields
+model User {
+    id    String @id
+    name  String
+    image String
+    email String
+    cart  Json   @default("{}")
+
+    // Relations
+    store       Store?
+    Address     Address[]
+    ratings     Rating[]
+    buyerOrders Order[]   @relation("BuyerRelation")
+}
+
+// For creating a Product these are the required fields
+model Product {
+    id          String   @id @default(cuid())
+    images      String[]
+    name        String
+    description String
+    category    String
+    regularPrice         Float
+    price       Float
+    storeId     String
+    inStock     Boolean  @default(true)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    // Relations
+    store      Store       @relation(fields: [storeId], references: [id], onDelete: Cascade)
+    orderItems OrderItem[]
+    rating     Rating[]
+}
+
+
+enum OrderStatus {
+    ORDER_PLACED
+    PROCESSING
+    SHIPPED
+    DELIVERED
+}
+
+enum PaymentMethod {
+    COD
+    STRIPE
+}
+
+// For creating an Order these are the required fields
+model Order {
+    id            String        @id @default(cuid())
+    total         Float
+    userId        String
+    paymentMethod PaymentMethod
+    addressId     String
+    storeId       String
+    orderItems    OrderItem[]
+    status        OrderStatus   @default(ORDER_PLACED)
+    coupon        Json          @default("{}")
+    isCouponUsed  Boolean       @default(false)
+    isPaid        Boolean       @default(false)
+    createdAt     DateTime      @default(now())
+    updatedAt     DateTime      @updatedAt
+
+    // Relations
+    address Address @relation(fields: [addressId], references: [id])
+    user    User    @relation("BuyerRelation", fields: [userId], references: [id])
+    store   Store   @relation(fields: [storeId], references: [id])
+}
+
+// For creating  an OrderItem these are the required fields
+model OrderItem {
+    orderId   String
+    productId String
+    price     Float
+    quantity  Int
+
+    // Relations
+    product Product @relation(fields: [productId], references: [id])
+    order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+    @@id([orderId, productId])
+}
+
+// For creating a Rating these are the required fields
+model Rating {
+    id        String   @id @default(cuid())
+    userId    String
+    orderId   String
+    productId String
+    rating    Int
+    review    String
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    // Relations
+    product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@unique([userId, productId, orderId])
+}
+
+// For creating an Address these are the required fields
+model Address {
+    id        String   @id @default(cuid())
+    userId    String
+    name      String
+    email     String
+    country   String
+    state     String
+    city      String
+    street    String
+    zip       String
+    phone     String
+    createdAt DateTime @default(now())
+
+    // Relations
+    Order Order[]
+    user  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// For creating a Coupon these are the required fields
+model Coupon {
+    code        String   @id
+    description String
+    discount    Float
+    forMember   Boolean  @default(false)
+    isPublic    Boolean
+    forNewUser  Boolean
+    expiresAt   DateTime
+    createdAt   DateTime @default(now())
+}
+
+// For creating a Store these are the required fields
+model Store {
+    id          String   @id @default(cuid())
+    userId      String   @unique
+    username    String   @unique
+    name        String
+    email       String
+    contact     String
+    address     String
+    description String
+    logo        String
+    status      String   @default("pending")
+    isActive    Boolean  @default(false)
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    Product Product[]
+    Order   Order[]
+    user    User      @relation(fields: [userId], references: [id])
+}

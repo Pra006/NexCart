@@ -3,12 +3,16 @@ import Link from "next/link";
 import React, { Suspense } from "react";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
+import { useClerk, UserButton, useUser } from "@clerk/nextjs";
+
 
 import ThemeSelector from "./ThemeSelector";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Package2Icon } from "lucide-react";
 import { useCartStore } from "@/lib/zustand/cartStore";
 
 const Navbar = () => {
+  const {user}= useUser()
+  const {openSignIn} = useClerk()
   const [activeTab, setActiveTab] = useState("website");
   const cartItems = useCartStore((state) => state.cartItems);
   const cartCount = Object.values(cartItems).reduce(
@@ -60,9 +64,20 @@ const Navbar = () => {
               </span>
             )}
           </Link>
-          <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">
+          {!user ? (<button onClick={openSignIn} className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg xl:btn-xl">
             Login
-          </button>
+          </button>) : (
+            <UserButton>
+              <UserButton.MenuItems>
+                <UserButton.Link
+                  href="/my-orders"
+                  labelIcon={<Package2Icon size={16} />}
+                  label="My Orders"
+                  onClick={()=> router.push("/my-orders")}
+                />
+              </UserButton.MenuItems>
+            </UserButton>
+          )}
         </div>
       </div>
     </div>

@@ -1,11 +1,18 @@
 import { Inter } from "next/font/google";
 import { Toaster } from "react-hot-toast";
+import {
+  ClerkProvider,
+  Show,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import "./globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"]
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata = {
@@ -23,7 +30,11 @@ export default function RootLayout({ children }) {
       suppressHydrationWarning
     >
       <body className={inter.className}>
-        <Toaster position="bottom-right"/>{children}</body>
+        <ClerkProvider>
+          <Toaster position="bottom-right" />
+          {children}
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

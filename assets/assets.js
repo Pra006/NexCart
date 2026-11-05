@@ -415,7 +415,7 @@ export const COUPONS_DATA = [
 // USER & ADDRESS
 export const USER_DATA = {
     id: "user_31dQbH27",
-    name: "Loomio User",
+    name: "Nex User",
     email: "user@example.com",
     image: ASSETS.user_logo,
     cart: {}
